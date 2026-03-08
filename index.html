@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>부모님 나트랑 3박 5일 일정표</title>
+    <style>
+      :root {
+        --bg: #f5f7fb;
+        --card: #ffffff;
+        --text: #1f2937;
+        --muted: #4b5563;
+        --primary: #0f766e;
+        --primary-soft: #ccfbf1;
+        --border: #dbe3ef;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+        font-size: 19px;
+      }
+
+      .container {
+        width: min(1080px, 94vw);
+        margin: 0 auto;
+        padding: 24px 0 40px;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0 0 12px;
+        line-height: 1.35;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 4.8vw, 2.8rem);
+      }
+
+      h2 {
+        font-size: clamp(1.45rem, 3.4vw, 2rem);
+        color: var(--primary);
+      }
+
+      h3 {
+        font-size: 1.25rem;
+      }
+
+      .lead {
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+        color: var(--muted);
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 18px;
+        box-shadow: 0 6px 18px rgba(15, 118, 110, 0.06);
+      }
+
+      .stack {
+        display: grid;
+        gap: 16px;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .pill {
+        display: inline-block;
+        padding: 6px 11px;
+        border-radius: 999px;
+        background: var(--primary-soft);
+        color: #115e59;
+        font-weight: 700;
+        font-size: 0.95rem;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 720px;
+        background: #fff;
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid var(--border);
+        padding: 13px 12px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: #ecfeff;
+        color: #155e75;
+        font-size: 1rem;
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      ul {
+        margin: 8px 0 0;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .important-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .important-item {
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        border-radius: 12px;
+        padding: 14px;
+      }
+
+      .summary-box {
+        border-left: 8px solid var(--primary);
+        background: #ecfeff;
+      }
+
+      .day-switch {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .btn {
+        border: 1px solid #8ccfc8;
+        background: #ffffff;
+        color: #0f766e;
+        border-radius: 10px;
+        padding: 8px 12px;
+        font-size: 0.95rem;
+        font-weight: 700;
+      }
+
+      .btn.active {
+        background: #0f766e;
+        color: #ffffff;
+      }
+
+      .copy-btn {
+        margin-top: 8px;
+      }
+
+      details.day-card {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: #fff;
+        padding: 0;
+      }
+
+      details.day-card[open] {
+        box-shadow: 0 6px 18px rgba(15, 118, 110, 0.06);
+      }
+
+      details.day-card > summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      details.day-card > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .day-content {
+        padding: 0 16px 16px;
+      }
+
+      .summary-line {
+        margin: 0;
+        font-size: 1rem;
+      }
+
+      .check-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px 18px;
+      }
+
+      .check-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .check-item input[type="checkbox"] {
+        width: 22px;
+        height: 22px;
+        margin-top: 4px;
+      }
+
+      .copy-feedback {
+        font-size: 0.92rem;
+        color: #0f766e;
+        min-height: 1.2em;
+        margin-top: 4px;
+      }
+
+      @media (max-width: 900px) {
+        body {
+          font-size: 18px;
+        }
+
+        .grid-3,
+        .important-grid,
+        .check-list {
+          grid-template-columns: 1fr;
+        }
+
+        details.day-card > summary {
+          font-size: 1.1rem;
+        }
+      }
+
+      @media (max-width: 520px) {
+        body {
+          font-size: 17px;
+        }
+
+        .container {
+          width: 95vw;
+          padding-top: 16px;
+        }
+
+        .card {
+          padding: 14px;
+          border-radius: 12px;
+        }
+
+        .btn {
+          padding: 8px 10px;
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container stack">
+      <section class="card">
+        <h1>부모님 나트랑 자유여행 일정표 (3박 5일)</h1>
+        <p class="lead">
+          50~60대 부모님 기준으로 무리한 이동을 줄이고, 휴식 시간을 충분히 넣은 간단하고 보기 쉬운 일정표입니다.
+        </p>
+
+        <div class="grid-3">
+          <div class="card summary-box">
+            <h3>오늘 일정 요약</h3>
+            <p class="summary-line" id="today-summary-title"><strong>Day 1</strong> · 한국 출발 → 나트랑 도착</p>
+            <ul id="today-summary-list">
+              <li>오전: 공항 이동, 체크인</li>
+              <li>점심: 기내식 또는 공항 식사</li>
+              <li>오후: 공항 도착 후 호텔 이동</li>
+              <li>저녁: 가벼운 식사 후 조기 취침</li>
+            </ul>
+            <div class="day-switch" role="tablist" aria-label="오늘 일정 선택">
+              <button type="button" class="btn active" data-day="day1">Day 1</button>
+              <button type="button" class="btn" data-day="day2">Day 2</button>
+              <button type="button" class="btn" data-day="day3">Day 3</button>
+              <button type="button" class="btn" data-day="day45">Day 4~5</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>여행 원칙</h3>
+            <ul>
+              <li>하루 핵심 일정 2~3개만</li>
+              <li>한낮에는 실내 휴식 우선</li>
+              <li>이동은 그랩(Grab) 중심</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>비 오는 날 플랜</h3>
+            <ul>
+              <li>스파/마사지</li>
+              <li>쇼핑몰 + 카페</li>
+              <li>호텔 근처 식사 후 휴식</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="card stack">
+        <h2>중요정보</h2>
+        <div class="important-grid">
+          <article class="important-item">
+            <h3>호텔 정보</h3>
+            <p class="muted">체크인 전에 정보 기입</p>
+            <p id="hotel-name">호텔명: ____________________</p>
+            <p id="hotel-address">주소: ______________________</p>
+            <p id="hotel-phone">전화: ______________________</p>
+            <button type="button" class="btn copy-btn" data-copy-target="hotel-address">호텔 주소 복사</button>
+            <button type="button" class="btn copy-btn" data-copy-target="hotel-phone">호텔 연락처 복사</button>
+            <p class="copy-feedback" id="copy-feedback"></p>
+          </article>
+          <article class="important-item">
+            <h3>항공편 정보</h3>
+            <p class="muted">출발/귀국 편명 기입</p>
+            <p>출국편: ____________________</p>
+            <p>귀국편: ____________________</p>
+            <p>탑승시간: __________________</p>
+          </article>
+          <article class="important-item">
+            <h3>비상 연락처</h3>
+            <p>가족 연락처: _______________</p>
+            <p>현지 긴급번호: <strong>113 / 114 / 115</strong></p>
+            <p>여권분실 문의: 대사관/영사콜센터</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="stack">
+        <details class="day-card" open>
+          <summary>Day 1 · 한국 출발 → 나트랑 도착 <span class="pill">휴식 중심</span></summary>
+          <div class="day-content">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>시간대</th>
+                    <th>일정</th>
+                    <th>부모님 여행 팁</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>오전</td>
+                    <td>공항 이동, 체크인, 출국 준비</td>
+                    <td>여권/항공권/상비약을 한 파우치에 정리</td>
+                  </tr>
+                  <tr>
+                    <td>점심</td>
+                    <td>기내식 또는 공항 간단 식사</td>
+                    <td>과식보다 수분 보충 우선</td>
+                  </tr>
+                  <tr>
+                    <td>오후</td>
+                    <td>깜란공항 도착 후 호텔 이동</td>
+                    <td>공항 환전은 소액만, 시내에서 추가 환전</td>
+                  </tr>
+                  <tr>
+                    <td>저녁</td>
+                    <td>호텔 체크인, 주변 가벼운 식사, 조기 취침</td>
+                    <td>첫날은 관광보다 컨디션 회복</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="day-card" open>
+          <summary>Day 2 · 시내 핵심 관광 + 카페 휴식 <span class="pill">관광 + 휴식 균형</span></summary>
+          <div class="day-content">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>시간대</th>
+                    <th>일정</th>
+                    <th>부모님 여행 팁</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>오전</td>
+                    <td>포나가르 사원</td>
+                    <td>모자/선글라스/물 챙기기</td>
+                  </tr>
+                  <tr>
+                    <td>점심</td>
+                    <td>시내 식당에서 쌀국수/분짜</td>
+                    <td>에어컨 있는 매장 우선</td>
+                  </tr>
+                  <tr>
+                    <td>오후</td>
+                    <td>롱선사 또는 대성당 1곳 + 카페 휴식</td>
+                    <td>명소를 1곳만 선택해 체력 안배</td>
+                  </tr>
+                  <tr>
+                    <td>저녁</td>
+                    <td>해변 산책, 저녁 식사, 야시장 짧게</td>
+                    <td>야시장은 1시간 이내로 짧게</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="day-card" open>
+          <summary>Day 3 · 머드스파/온천 힐링 데이 <span class="pill">무리 없는 힐링</span></summary>
+          <div class="day-content">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>시간대</th>
+                    <th>일정</th>
+                    <th>부모님 여행 팁</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>오전</td>
+                    <td>머드스파/온천 이용</td>
+                    <td>미끄럼 주의, 입욕 후 물 충분히 마시기</td>
+                  </tr>
+                  <tr>
+                    <td>점심</td>
+                    <td>리조트 또는 인근 식당</td>
+                    <td>늦은 점심보다 12시 전후 추천</td>
+                  </tr>
+                  <tr>
+                    <td>오후</td>
+                    <td>호텔 복귀 후 낮잠/자유 휴식</td>
+                    <td>오후는 비워둘수록 만족도 높음</td>
+                  </tr>
+                  <tr>
+                    <td>저녁</td>
+                    <td>레스토랑 저녁식사</td>
+                    <td>귀가 그랩 미리 호출</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="day-card" open>
+          <summary>Day 4~5 · 체크아웃 & 귀국 <span class="pill">여유 있게 마무리</span></summary>
+          <div class="day-content">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>시간대</th>
+                    <th>일정</th>
+                    <th>부모님 여행 팁</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>오전</td>
+                    <td>늦은 기상, 체크아웃 준비, 브런치</td>
+                    <td>여권/지갑/휴대폰 최종 확인</td>
+                  </tr>
+                  <tr>
+                    <td>점심</td>
+                    <td>마지막 식사, 간단 쇼핑</td>
+                    <td>액체류 기내 반입 규정 확인</td>
+                  </tr>
+                  <tr>
+                    <td>오후</td>
+                    <td>공항 이동 및 출국 수속</td>
+                    <td>출발 3시간 전 공항 도착 권장</td>
+                  </tr>
+                  <tr>
+                    <td>저녁</td>
+                    <td>귀국 비행 후 다음 날 한국 도착</td>
+                    <td>도착 당일은 무리한 일정 금지</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <section class="card stack">
+        <h2>공항/환전/유심/그랩 한눈에 보기</h2>
+        <div class="grid-3">
+          <article class="card">
+            <h3>공항 이동</h3>
+            <ul>
+              <li>깜란공항↔시내 약 40~60분</li>
+              <li>야간 도착은 사전 픽업 또는 그랩</li>
+              <li>출국일은 여유 있게 이동</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>환전/유심</h3>
+            <ul>
+              <li>공항은 소액 환전만</li>
+              <li>시내 환전소에서 환율 비교</li>
+              <li>초보자는 eSIM 사전 구매 추천</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>그랩 사용</h3>
+            <ul>
+              <li>한국에서 앱 설치/카드 등록</li>
+              <li>차량번호 확인 후 탑승</li>
+              <li>호텔명/주소를 채팅으로 전송</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="card stack">
+        <h2>준비물 체크리스트</h2>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" /> 여권(유효기간 확인)</label>
+          <label class="check-item"><input type="checkbox" /> 항공권 e-티켓</label>
+          <label class="check-item"><input type="checkbox" /> 호텔 바우처</label>
+          <label class="check-item"><input type="checkbox" /> 여행자 보험 정보</label>
+          <label class="check-item"><input type="checkbox" /> 해외 결제 카드</label>
+          <label class="check-item"><input type="checkbox" /> 현금(소액권)</label>
+          <label class="check-item"><input type="checkbox" /> eSIM/유심</label>
+          <label class="check-item"><input type="checkbox" /> 충전기/보조배터리</label>
+          <label class="check-item"><input type="checkbox" /> 멀티어댑터</label>
+          <label class="check-item"><input type="checkbox" /> 상비약</label>
+          <label class="check-item"><input type="checkbox" /> 모자/선글라스/선크림</label>
+          <label class="check-item"><input type="checkbox" /> 얇은 겉옷</label>
+          <label class="check-item"><input type="checkbox" /> 편한 신발</label>
+          <label class="check-item"><input type="checkbox" /> 우산 또는 우비</label>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const summaryData = {
+        day1: {
+          title: "<strong>Day 1</strong> · 한국 출발 → 나트랑 도착",
+          items: [
+            "오전: 공항 이동, 체크인",
+            "점심: 기내식 또는 공항 식사",
+            "오후: 공항 도착 후 호텔 이동",
+            "저녁: 가벼운 식사 후 조기 취침",
+          ],
+        },
+        day2: {
+          title: "<strong>Day 2</strong> · 시내 핵심 관광",
+          items: [
+            "오전: 포나가르 사원",
+            "점심: 시내 식당 식사",
+            "오후: 명소 1곳 + 카페 휴식",
+            "저녁: 해변 산책 + 야시장 짧게",
+          ],
+        },
+        day3: {
+          title: "<strong>Day 3</strong> · 머드스파/온천 힐링",
+          items: [
+            "오전: 머드스파/온천",
+            "점심: 리조트 또는 인근 식당",
+            "오후: 호텔 자유 휴식",
+            "저녁: 레스토랑 식사",
+          ],
+        },
+        day45: {
+          title: "<strong>Day 4~5</strong> · 체크아웃 & 귀국",
+          items: [
+            "오전: 체크아웃 준비, 브런치",
+            "점심: 마지막 식사 및 쇼핑",
+            "오후: 공항 이동, 출국 수속",
+            "저녁: 귀국 비행 / 한국 도착 후 휴식",
+          ],
+        },
+      };
+
+      const titleEl = document.getElementById("today-summary-title");
+      const listEl = document.getElementById("today-summary-list");
+      const dayButtons = document.querySelectorAll(".day-switch .btn");
+
+      dayButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const key = button.dataset.day;
+          const data = summaryData[key];
+          if (!data) return;
+
+          dayButtons.forEach((b) => b.classList.remove("active"));
+          button.classList.add("active");
+
+          titleEl.innerHTML = data.title;
+          listEl.innerHTML = data.items.map((item) => `<li>${item}</li>`).join("");
+        });
+      });
+
+      const copyButtons = document.querySelectorAll(".copy-btn");
+      const feedbackEl = document.getElementById("copy-feedback");
+
+      copyButtons.forEach((button) => {
+        button.addEventListener("click", async () => {
+          const targetId = button.dataset.copyTarget;
+          const target = document.getElementById(targetId);
+          if (!target) return;
+
+          const text = target.textContent.replace(/^(주소|전화):\s*/, "").trim();
+          try {
+            await navigator.clipboard.writeText(text);
+            feedbackEl.textContent = "복사되었습니다.";
+          } catch (error) {
+            feedbackEl.textContent = "복사에 실패했습니다. 직접 선택해서 복사해주세요.";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
